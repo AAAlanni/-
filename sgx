@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>邵光绪 | 智能垃圾桶宣传官网</title>
+    <style>
+        /* --- 核心变量与后现代设计系统 --- */
+        :root {
+            --primary-neon: #00ffcc;
+            --secondary-neon: #7000ff;
+            --accent-pink: #ff007a;
+            --bg-deep: #050507;
+            --text-main: #ffffff;
+            --glass: rgba(255, 255, 255, 0.05);
+            --transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', 'PingFang SC', sans-serif; }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* --- 后现代动态背景元素 --- */
+        .dynamic-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 50% 50%, #0c0c1e 0%, #050507 100%);
+            overflow: hidden;
+        }
+
+        .blob {
+            position: absolute;
+            width: 600px; height: 600px;
+            background: var(--secondary-neon);
+            filter: blur(120px);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 20s infinite alternate ease-in-out;
+        }
+        .blob-2 { background: var(--primary-neon); right: -10%; top: 20%; animation-delay: -7s; }
+        .blob-3 { background: var(--accent-pink); left: 10%; bottom: -10%; animation-delay: -12s; }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(100px, 50px) scale(1.2); }
+        }
+
+        /* --- 导航栏 --- */
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 25px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(25px);
+            background: rgba(5, 5, 7, 0.8);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, var(--primary-neon), #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links button {
+            background: none; border: none; color: #fff;
+            margin-left: 30px; cursor: pointer;
+            font-size: 0.85rem; font-weight: 600;
+            text-transform: uppercase; transition: var(--transition);
+            letter-spacing: 1px;
+        }
+        .nav-links button:hover { color: var(--primary-neon); transform: translateY(-2px); }
+
+        .lang-switch {
+            border: 1px solid var(--primary-neon) !important;
+            padding: 5px 18px; border-radius: 30px;
+        }
+
+        /* --- 内容容器 --- */
+        .content-wrapper {
+            padding-top: 120px;
+            max-width: 1300px;
+            margin: 0 auto;
+            width: 90%;
+        }
+
+        .page {
+            display: none;
+            padding: 40px 0;
+            animation: fadeIn 0.8s forwards ease-out;
+        }
+        .page.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- 首页 (智能垃圾桶 + 视频) --- */
+        .hero { display: flex; align-items: center; min-height: 70vh; gap: 60px; }
+        
+        .hero-text { flex: 1; }
+        .hero-text h1 {
+            font-size: 6rem; line-height: 1;
+            font-weight: 900; text-transform: uppercase;
+            margin-bottom: 20px;
+            text-shadow: 10px 10px 0 rgba(112, 0, 255, 0.3);
+        }
+
+        .video-box {
+            flex: 1.2;
+            position: relative;
+            border: 2px solid #fff;
+            padding: 15px;
+            background: var(--glass);
+            box-shadow: 25px 25px 0 var(--secondary-neon);
+        }
+        video { width: 100%; display: block; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
+
+        /* --- 功能特点板块 --- */
+        .features-header { text-align: center; margin-bottom: 60px; }
+        .features-header h2 { font-size: 3.5rem; text-transform: uppercase; }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+        }
+        .feature-card {
+            background: var(--glass);
+            padding: 50px;
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        .feature-card:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: var(--primary-neon);
+            transform: scale(1.03) rotate(-1deg);
+        }
+        .feature-card::before {
+            content: ""; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--primary-neon);
+        }
+        .feature-card h3 { font-size: 1.8rem; margin-bottom: 20px; color: var(--primary-neon); }
+        .feature-card p { font-size: 1.1rem; color: #ccc; line-height: 1.8; }
+
+        /* --- 关于作者板块 --- */
+        .profile-card {
+            background: var(--glass);
+            display: flex; gap: 60px;
+            padding: 80px; border: 2px solid #fff;
+            align-items: center; flex-wrap: wrap;
+            backdrop-filter: blur(10px);
+        }
+        .avatar {
+            width: 220px; height: 220px;
+            background: var(--secondary-neon);
+            border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            font-size: 5rem; border: 4px solid var(--primary-neon);
+            box-shadow: 0 0 50px var(--secondary-neon);
+        }
+
+        .info-list { list-style: none; }
+        .info-list li { margin-bottom: 20px; font-size: 1.2rem; }
+        .info-list b { color: var(--primary-neon); margin-right: 15px; text-transform: uppercase; letter-spacing: 1px; }
+
+        footer {
+            margin-top: 120px; padding: 60px;
+            text-align: center; border-top: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.75rem; letter-spacing: 4px; color: #444;
+        }
+
+        /* --- 响应式 --- */
+        @media (max-width: 1024px) {
+            .hero { flex-direction: column; text-align: center; }
+            .hero-text h1 { font-size: 4rem; }
+            .video-box { width: 100%; box-shadow: 15px 15px 0 var(--secondary-neon); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dynamic-bg">
+        <div class="blob"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <nav>
+        <div class="logo">ECO-SMART</div>
+        <div class="nav-links">
+            <button onclick="showPage('home')" data-zh="首页" data-en="Home">首页</button>
+            <button onclick="showPage('features')" data-zh="功能细节" data-en="Features">功能细节</button>
+            <button onclick="showPage('about')" data-zh="关于作者" data-en="About">关于作者</button>
+            <button class="lang-switch" onclick="toggleLang()" id="langBtn">EN</button>
+        </div>
+    </nav>
+
+    <div class="content-wrapper">
+        
+        <!-- 板块 1: 首页 -->
+        <section id="home" class="page active">
+            <div class="hero">
+                <div class="hero-text">
+                    <h1 data-zh="智能<br>垃圾桶" data-en="SMART<br>TRASH BIN">智能<br>垃圾桶</h1>
+                    <button onclick="showPage('features')" style="background:var(--primary-neon); color:#000; padding:15px 40px; border:none; font-weight:900; cursor:pointer; margin-top:20px; letter-spacing:1px;" data-zh="技术解析" data-en="TECH INFO">技术解析</button>
+                </div>
+                <div class="video-box">
+                    <video controls autoplay muted loop poster="https://picsum.photos/800/450?grayscale">
+                        <source src="http://upos-sz-mirrorcos.bilivideo.com/upgcxcode/12/58/500001657835812/500001657835812-1-192.mp4?e=ig8euxZM2rNcNbRVhwdVhwdlhWdVhwdVhoNvNC8BqJIzNbfq9rVEuxTEnE8L5F6VnEsSTx0vkX8fqJeYTj_lta53NCM=&oi=2067347262&os=08cbv&og=hw&deadline=1778260109&nbs=1&gen=playurlv3&uipk=5&platform=html5&mid=0&trid=ab3d39bbcc95443eb79661d9104adffO&upsig=ab370c046e6885542f30a488bf7fcea6&uparams=e,oi,os,og,deadline,nbs,gen,uipk,platform,mid,trid&bvc=vod&nettype=1&bw=226732&f=O_0_0&agrr=0&buvid=&build=7330300&dl=0&orderid=0,3" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        </section>
+
+        <!-- 板块 2: 功能特点 -->
+        <section id="features" class="page">
+            <div class="features-header">
+                <h2 data-zh="核心技术解析" data-en="CORE FEATURES">核心技术解析</h2>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3 data-zh="01 视觉分类" data-en="01 Visual Sorting">01 视觉分类</h3>
+                    <p data-zh="集成高精度摄像头与AI神经网络，秒速识别干湿垃圾、可回收物及有害物质，实现自动化精准引导。" data-en="AI neural network recognizes waste types in seconds for automated precision sorting.">集成高精度摄像头与AI神经网络，秒速识别干湿垃圾、可回收物及有害物质，实现自动化精准引导。</p>
+                </div>
+                <div class="feature-card">
+                    <h3 data-zh="02 感应开合" data-en="02 Smart Lid">02 感应开合</h3>
+                    <p data-zh="超声波雷达360度感知，0.2秒非接触式开启，配合防夹手智能算法，提供极致流畅的使用体验。" data-en="360° radar sensing with 0.2s touchless lid opening for a seamless experience.">超声波雷达360度感知，0.2秒非接触式开启，配合防夹手智能算法，提供极致流畅的使用体验。</p>
+                </div>
+                <div class="feature-card">
+                    <h3 data-zh="03 自动打包" data-en="03 Auto Bagging">03 自动打包</h3>
+                    <p data-zh="独创热熔封口技术，一键完成自动打包与换袋，全程无需触碰，彻底终结二次污染。" data-en="Unique heat-sealing tech completes bagging automatically, ending secondary pollution.">独创热熔封口技术，一键完成自动打包与换袋，全程无需触碰，彻底终结二次污染。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 板块 3: 个人信息 -->
+        <section id="about" class="page">
+            <div class="profile-card">
+                <div class="avatar">👨‍💻</div>
+                <div class="info-details">
+                    <h2 data-zh="制作人信息" data-en="PRODUCER INFO">制作人信息</h2>
+                    <ul class="info-list">
+                        <li><b data-zh="项目作者" data-en="NAME">项目作者</b>邵光绪 / Shao Guangxu</li>
+                        <li><b data-zh="学生证号" data-en="ID">学生证号</b>24019100551</li>
+                        <li><b data-zh="开发项目" data-en="PROJECT">开发项目</b>智能垃圾桶宣传官网</li>
+                        <li><b data-zh="虚拟邮箱" data-en="EMAIL">虚拟邮箱</b>shaoguangxu_virtual@design.com</li>
+                        <li><b data-zh="设计核心" data-en="CORE">设计核心</b><i data-zh="“以数字化方案，解决最平凡的日常。”" data-en="“Solve daily trivialities with digital solutions.”">“以数字化方案，解决最平凡的日常。”</i></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2024 SHAO GUANGXU / STUDENT ID: 24019100551 / DESIGN PROJECT</p>
+    </footer>
+
+    <script>
+        // 页面切换
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        // 语言切换
+        let currentLang = 'zh';
+        function toggleLang() {
+            currentLang = currentLang === 'zh' ? 'en' : 'zh';
+            const btn = document.getElementById('langBtn');
+            btn.innerText = currentLang === 'zh' ? 'EN' : '中文';
+
+            document.querySelectorAll('[data-zh]').forEach(el => {
+                el.innerHTML = currentLang === 'zh' ? el.getAttribute('data-zh') : el.getAttribute('data-en');
+            });
+        }
+    </script>
+</body>
+</html>
