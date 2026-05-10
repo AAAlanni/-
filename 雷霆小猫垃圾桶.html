@@ -170,10 +170,19 @@
 
 <script>
   function showPage(pageId) {
+    // ↓↓↓ 这里是我加的，让地址栏变化 ↓↓↓
+    window.location.hash = pageId;
+
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById(pageId).classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+  // ↓↓↓ 这里是我加的，刷新保持当前页 ↓↓↓
+  window.onload = function() {
+    const hash = window.location.hash.slice(1) || 'home';
+    showPage(hash);
+  };
 
   let currentLang = 'zh';
   function toggleLang() {
